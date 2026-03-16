@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "builds": [
+    { "src": "carma_patent_portfolio.html", "use": "@vercel/static" }
+  ],
+  "routes": [
+    { "src": "/", "dest": "/carma_patent_portfolio.html" },
+    { "src": "/patents", "dest": "/carma_patent_portfolio.html" }
+  ]
+}

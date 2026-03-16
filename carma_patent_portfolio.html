@@ -1,0 +1,1249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Carma Technology — Patent Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black:  #0d0d0d;
+    --dark:   #1a1a2e;
+    --blue:   #4a90e2;
+    --blue-d: #2d73c8;
+    --blue-l: #6aaaf0;
+    --blue-pale: #eaf3fd;
+    --white:  #ffffff;
+    --off:    #f7f8fa;
+    --issued-color: #1a7a4a;
+    --issued-bg:    #e8f5ee;
+    --allowed-color:#2d73c8;
+    --allowed-bg:   #eaf3fd;
+    --pub-color:    #7a5c10;
+    --pub-bg:       #fdf6e4;
+    --pend-color:   #995200;
+    --pend-bg:      #fff3ec;
+    --assert-color: #1a4a8a;
+    --assert-bg:    #eef3fb;
+    --assert-bdr:   #4a90e2;
+    --txt:    #1a1a2e;
+    --txt-m:  #3a4a6b;
+    --txt-l:  #6b7a9a;
+    --bdr:    #e0e6f0;
+    --bdr-l:  #f0f3f8;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--off); color: var(--txt); min-height: 100vh; }
+
+  /* ── HEADER ── */
+  .header { background: #000; padding: 0; }
+  .header-inner {
+    max-width: 1400px; margin: 0 auto;
+    padding: 28px 56px 26px;
+    display: flex; justify-content: space-between; align-items: center; gap: 40px;
+  }
+  .header-left { flex: 1; }
+  .logo-lockup { margin-bottom: 18px; }
+  .logo-img { height: 38px; width: auto; display: block; }
+
+  .header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px; font-weight: 700;
+    color: var(--white); line-height: 1.2; margin-bottom: 5px; letter-spacing: -0.4px;
+  }
+  .header-subtitle { font-size: 13px; color: rgba(255,255,255,0.45); font-weight: 400; }
+  .header-right { text-align: right; flex-shrink: 0; }
+  .header-stat { display: flex; flex-direction: column; align-items: flex-end; gap: 5px; }
+  .stat-item { display: flex; align-items: center; gap: 10px; }
+  .stat-label { font-size: 11px; text-transform: uppercase; letter-spacing: 1.2px; color: rgba(255,255,255,0.35); font-weight: 500; }
+  .stat-value { font-family: 'DM Mono', monospace; font-size: 12px; color: rgba(255,255,255,0.7); font-weight: 500; }
+  .updated-badge {
+    background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 5px; padding: 5px 12px; font-size: 10px;
+    color: rgba(255,255,255,0.45); letter-spacing: 1px; text-transform: uppercase; font-weight: 500; margin-top: 12px;
+  }
+
+  /* ── ACCENT BAR ── */
+  .gold-bar { height: 3px; background: linear-gradient(90deg, var(--blue-d) 0%, var(--blue) 50%, var(--blue-l) 100%); }
+
+  /* ── LAWSUIT BANNER ── */
+  .lawsuit-banner { background: #f0f5fc; border-bottom: 1px solid rgba(74,144,226,0.2); }
+  .lawsuit-inner { max-width: 1400px; margin: 0 auto; padding: 14px 56px; display: flex; align-items: center; gap: 16px; }
+  .lawsuit-icon {
+    width: 32px; height: 32px; background: rgba(74,144,226,0.08);
+    border: 1px solid rgba(74,144,226,0.25); border-radius: 7px;
+    display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0;
+  }
+  .lawsuit-text { flex: 1; }
+  .lawsuit-title { font-size: 10px; font-weight: 700; color: var(--blue-d); text-transform: uppercase; letter-spacing: 1.1px; margin-bottom: 2px; }
+  .lawsuit-desc { font-size: 13px; color: var(--txt-m); }
+  .lawsuit-desc strong { color: var(--txt); font-weight: 600; }
+  .patent-pills { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+  .patent-pill {
+    background: rgba(224,48,0,0.06); border: 1px solid rgba(74,144,226,0.25);
+    border-radius: 20px; padding: 3px 10px;
+    font-family: 'DM Mono', monospace; font-size: 10px; color: var(--blue-d); font-weight: 600; white-space: nowrap;
+  }
+
+  /* ── SUMMARY BAR ── */
+  .summary-bar { background: var(--white); border-bottom: 1px solid var(--bdr); box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
+  .summary-inner { max-width: 1400px; margin: 0 auto; padding: 16px 56px; display: flex; }
+  .summary-stat { flex: 1; padding: 0 18px; border-right: 1px solid var(--bdr); text-align: center; }
+  .summary-stat:first-child { padding-left: 0; }
+  .summary-stat:last-child { border-right: none; }
+  .sum-num { font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 700; color: var(--dark); line-height: 1; margin-bottom: 3px; }
+  .sum-num .sum-accent { color: var(--blue); }
+  .sum-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.8px; color: var(--txt-l); font-weight: 500; }
+
+  /* ── MAIN ── */
+  .main { max-width: 1400px; margin: 0 auto; padding: 34px 56px 80px; }
+
+  /* ── FAMILY ── */
+  .family-section { margin-bottom: 50px; }
+  .family-header { display: flex; align-items: center; gap: 14px; margin-bottom: 18px; padding-bottom: 14px; border-bottom: 2px solid var(--blue); }
+  .family-badge { background: var(--blue); color: var(--white); font-family: 'DM Mono', monospace; font-size: 11px; font-weight: 600; padding: 5px 13px; border-radius: 5px; letter-spacing: 0.5px; white-space: nowrap; }
+  .family-title { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; color: var(--dark); flex: 1; }
+  .family-meta { font-size: 12px; color: var(--txt-l); text-align: right; line-height: 1.6; }
+  .family-meta strong { color: var(--blue-d); }
+
+  /* ── TABLE ── */
+  .table-wrap { background: var(--white); border-radius: 10px; border: 1px solid var(--bdr); overflow: hidden; box-shadow: 0 1px 8px rgba(0,0,0,0.05); }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  thead th {
+    background: var(--dark); color: rgba(255,255,255,0.6);
+    font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.9px;
+    padding: 11px 14px; text-align: left; white-space: nowrap;
+    border-bottom: 2px solid var(--blue);
+  }
+  thead th:first-child { padding-left: 20px; }
+  thead th:last-child  { padding-right: 20px; }
+  tbody tr { border-bottom: 1px solid var(--bdr-l); transition: background 0.1s; }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: var(--blue-pale); }
+  tbody tr.asserted-row { background: var(--assert-bg); border-left: 3px solid var(--assert-bdr); }
+  tbody tr.asserted-row:hover { background: #deeaf8; }
+  tbody tr.asserted-row td:first-child { padding-left: 17px; }
+  tbody tr.pending-row { background: #fafbff; }
+  tbody tr.pending-row:hover { background: var(--blue-pale); }
+  td { padding: 12px 14px; vertical-align: top; color: var(--txt); line-height: 1.45; }
+  td:first-child { padding-left: 20px; }
+  td:last-child  { padding-right: 20px; }
+
+  .asserted-badge {
+    display: inline-flex; align-items: center; gap: 4px;
+    background: #2d5fa8; color: #fff;
+    font-size: 9px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase;
+    padding: 2px 7px; border-radius: 4px; margin-top: 3px; white-space: nowrap;
+  }
+
+  .patent-num { font-family: 'DM Mono', monospace; font-size: 13px; font-weight: 500; color: var(--txt); white-space: nowrap; }
+  .patent-num a { color: var(--blue-d); text-decoration: none; border-bottom: 1px solid rgba(74,144,226,0.3); padding-bottom: 1px; transition: color .15s, border-color .15s; }
+  .patent-num a:hover { color: var(--blue); border-color: transparent; }
+  .patent-pending { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--txt-l); font-style: italic; }
+
+  .status-badge { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 20px; white-space: nowrap; }
+  .status-badge::before { content: ''; width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+  .status-issued   { background: var(--issued-bg);  color: var(--issued-color); }
+  .status-issued::before  { background: var(--issued-color); }
+  .status-allowed  { background: var(--allowed-bg); color: var(--allowed-color); }
+  .status-allowed::before { background: var(--blue); }
+  .status-published{ background: var(--pub-bg);     color: var(--pub-color); }
+  .status-published::before{ background: #c09020; }
+  .status-pending  { background: var(--pend-bg);    color: var(--pend-color); }
+  .status-pending::before { background: #c07020; }
+
+  .date-cell { white-space: nowrap; }
+  .date-main { font-size: 13px; color: var(--txt); }
+  .date-sub  { font-size: 11px; color: var(--txt-l); margin-top: 2px; }
+  .patent-title  { font-size: 12.5px; color: var(--txt); font-weight: 500; line-height: 1.4; max-width: 240px; }
+  .claim-summary { font-size: 12px; color: var(--txt-m); line-height: 1.5; max-width: 230px; }
+  .renewal-date  { font-size: 12px; color: var(--txt); font-weight: 500; white-space: nowrap; }
+  .renewal-fee   { font-size: 11px; color: var(--txt-l); margin-top: 2px; white-space: nowrap; }
+  .renewal-na    { font-size: 11px; color: #aab; font-style: italic; }
+  .atty-ref      { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--txt-l); white-space: nowrap; }
+  .type-cell     { font-size: 11.5px; color: var(--txt-m); max-width: 100px; line-height: 1.4; }
+  .expiry-cell   { white-space: nowrap; }
+  .expiry-year   { font-size: 13px; color: var(--txt); font-weight: 500; }
+  .expiry-note   { font-size: 10px; color: var(--txt-l); margin-top: 1px; }
+
+  .link-btn {
+    display: inline-flex; align-items: center; gap: 4px;
+    font-size: 11px; font-weight: 500; padding: 5px 10px; border-radius: 5px;
+    text-decoration: none; transition: all .15s; white-space: nowrap;
+    border: 1px solid var(--bdr); color: var(--blue-d); background: var(--white); margin-bottom: 4px;
+  }
+  .link-btn:hover { background: var(--blue); color: var(--white); border-color: var(--blue); }
+
+  .scroll-hint  { font-size: 11px; color: var(--txt-l); text-align: right; margin-bottom: 8px; font-style: italic; }
+  .section-intro{ font-size: 13px; color: var(--txt-m); margin-bottom: 14px; line-height: 1.6; max-width: 900px; }
+  .section-intro strong { color: var(--txt); }
+
+  .footnotes {
+    background: var(--white); border: 1px solid var(--bdr); border-left: 4px solid var(--blue);
+    border-radius: 8px; padding: 20px 24px; margin-top: 26px;
+    font-size: 12px; color: var(--txt-m); line-height: 1.7;
+  }
+  .footnotes h4 { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: var(--blue-d); font-weight: 700; margin-bottom: 10px; }
+  .footnotes ul  { padding-left: 16px; }
+  .footnotes li  { margin-bottom: 4px; }
+  .footnotes strong { color: var(--txt); }
+
+  .page-footer { background: #000; padding: 20px 56px; }
+  .footer-inner { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+  .footer-legal { font-size: 11px; color: rgba(255,255,255,0.3); line-height: 1.6; }
+  .footer-conf  { font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; color: rgba(255,255,255,0.4); font-weight: 600; border: 1px solid rgba(255,255,255,0.15); padding: 4px 12px; border-radius: 4px; }
+
+  @media (max-width: 1200px) {
+    .main, .header-inner, .summary-inner, .lawsuit-inner, .page-footer { padding-left: 28px; padding-right: 28px; }
+    .main { padding-top: 26px; padding-bottom: 60px; }
+  }
+
+  /* ── SORTABLE COLUMNS ── */
+  thead th.sortable {
+    cursor: pointer;
+    user-select: none;
+    position: relative;
+    padding-right: 26px;
+    transition: background 0.15s;
+  }
+  thead th.sortable:hover { background: #263050; }
+  thead th.sort-asc,
+  thead th.sort-desc { background: #2d3d60; color: rgba(255,255,255,0.9); }
+  .sort-icon {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: inline-flex;
+    flex-direction: column;
+    gap: 2px;
+    opacity: 0.35;
+    transition: opacity 0.15s;
+  }
+  thead th.sortable:hover .sort-icon { opacity: 0.7; }
+  thead th.sort-asc .sort-icon,
+  thead th.sort-desc .sort-icon { opacity: 1; }
+  .sort-icon .arr-up,
+  .sort-icon .arr-down {
+    width: 0; height: 0; display: block;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+  }
+  .sort-icon .arr-up   { border-bottom: 5px solid currentColor; }
+  .sort-icon .arr-down { border-top:    5px solid currentColor; }
+  thead th.sort-asc  .sort-icon .arr-up   { color: var(--blue-l); opacity: 1; }
+  thead th.sort-asc  .sort-icon .arr-down { color: rgba(255,255,255,0.2); }
+  thead th.sort-desc .sort-icon .arr-up   { color: rgba(255,255,255,0.2); }
+  thead th.sort-desc .sort-icon .arr-down { color: var(--blue-l); opacity: 1; }
+  .sort-reset-bar {
+    display: none;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+    font-size: 12px;
+    color: var(--blue-d);
+  }
+  .sort-reset-bar.visible { display: flex; }
+  .sort-reset-btn {
+    background: var(--blue-pale);
+    border: 1px solid rgba(74,144,226,0.3);
+    border-radius: 5px;
+    padding: 3px 10px;
+    font-size: 11px;
+    color: var(--blue-d);
+    cursor: pointer;
+    font-weight: 500;
+    transition: background 0.15s;
+  }
+  .sort-reset-btn:hover { background: var(--blue); color: #fff; }
+
+</style>
+</head>
+<body>
+
+<!-- PASSWORD GATE -->
+<div id="pw-gate" style="
+  position:fixed;inset:0;z-index:9999;
+  background:#000;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'DM Sans',sans-serif;
+">
+  <div style="
+    background:#111;
+    border:1px solid #333;
+    border-top:3px solid #4a90e2;
+    border-radius:12px;
+    padding:44px 48px;
+    width:380px;
+    max-width:92vw;
+    text-align:center;
+    box-shadow:0 24px 60px rgba(0,0,0,0.6);
+  ">
+    <img src="" style="height:34px;margin-bottom:28px;display:block;margin-left:auto;margin-right:auto;" alt="GoCarma">
+    <div style="font-size:13px;color:rgba(255,255,255,0.5);letter-spacing:1.5px;text-transform:uppercase;font-weight:600;margin-bottom:6px;">Restricted Access</div>
+    <div style="font-size:22px;font-family:'Playfair Display',serif;color:#fff;font-weight:700;margin-bottom:24px;">Patent Portfolio</div>
+    <input id="pw-input" type="password" placeholder="Enter password"
+      autocomplete="off" spellcheck="false"
+      style="
+        width:100%;padding:12px 16px;font-size:15px;
+        background:#1c1c1c;border:1px solid #333;border-radius:7px;
+        color:#fff;outline:none;
+        font-family:'DM Sans',sans-serif;
+        transition:border-color 0.2s;
+        margin-bottom:12px;
+        box-sizing:border-box;
+      "
+      onkeydown="if(event.key==='Enter')checkPw()"
+      onfocus="this.style.borderColor='#4a90e2'"
+      onblur="this.style.borderColor='#333'"
+    >
+    <div id="pw-err" style="color:#e05050;font-size:12px;height:16px;margin-bottom:10px;"></div>
+    <button onclick="checkPw()" style="
+      width:100%;padding:12px;font-size:14px;font-weight:600;
+      background:#4a90e2;color:#fff;border:none;border-radius:7px;
+      cursor:pointer;font-family:'DM Sans',sans-serif;letter-spacing:0.3px;
+      transition:background 0.15s;
+    "
+    onmouseover="this.style.background='#2d73c8'"
+    onmouseout="this.style.background='#4a90e2'"
+    >Access Portfolio →</button>
+    <div style="margin-top:20px;font-size:11px;color:rgba(255,255,255,0.2);line-height:1.5;">
+      Confidential · Executive &amp; Board Use Only
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  const HASH = "4dbbb38cc3d3bcbd0512dc8fb0959c27a1e1b47180f10fe07f95e83b2a035498";
+  const KEY  = "carma_patent_auth";
+
+  async function sha256(str) {
+    const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(str));
+    return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,"0")).join("");
+  }
+
+  async function checkPw() {
+    const val = document.getElementById("pw-input").value;
+    const h   = await sha256(val);
+    if (h === HASH) {
+      sessionStorage.setItem(KEY, "1");
+      document.getElementById("pw-gate").style.display = "none";
+      document.body.style.overflow = "";
+    } else {
+      const err = document.getElementById("pw-err");
+      const inp = document.getElementById("pw-input");
+      err.textContent = "Incorrect password. Please try again.";
+      inp.style.borderColor = "#e05050";
+      inp.value = "";
+      inp.focus();
+      setTimeout(() => { err.textContent=""; inp.style.borderColor="#333"; }, 3000);
+    }
+  }
+
+  window.checkPw = checkPw;
+
+  // Check session — if already authenticated, hide gate immediately
+  if (sessionStorage.getItem(KEY) === "1") {
+    document.getElementById("pw-gate").style.display = "none";
+  } else {
+    document.body.style.overflow = "hidden";
+  }
+})();
+</script>
+
+
+<!-- HEADER -->
+<header class="header">
+  <div class="header-inner">
+    <div class="header-left">
+      <div class="logo-lockup">
+        <img src="data:image/png;base64,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" alt="GoCarma" class="logo-img">
+      </div>
+      <h1>Patent Portfolio</h1>
+      <div class="header-subtitle">Intellectual Property Overview — Confidential Executive Reference</div>
+    </div>
+    <div class="header-right">
+      <div class="header-stat">
+        <div class="stat-item">
+          <span class="stat-label">Priority Date</span>
+          <span class="stat-value">Feb 12, 2007</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-label">Jurisdiction</span>
+          <span class="stat-value">United States</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-label">Portfolio Updated</span>
+          <span class="stat-value">March 2026</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-label">Prosecution Counsel</span>
+          <span class="stat-value">McKool Smith · Bunsow De Mory</span>
+        </div>
+      </div>
+      <div class="updated-badge">Confidential · Board Reference</div>
+    </div>
+  </div>
+</header>
+<div class="gold-bar"></div>
+
+<!-- LAWSUIT BANNER -->
+<div class="lawsuit-banner">
+  <div class="lawsuit-inner">
+    <div class="lawsuit-icon">⚖️</div>
+    <div class="lawsuit-text">
+      <div class="lawsuit-title">Active Litigation</div>
+      <div class="lawsuit-desc">
+        <strong>Carma Technology Corp. &amp; Ltd. v. Uber Technologies, Inc.</strong> — 
+        U.S. District Court, Eastern District of Texas, Marshall Division — 
+        Civil Action No. <strong>2:25-CV-29</strong>, filed January 14, 2025. 
+        Five patents asserted below (highlighted in blue).
+      </div>
+    </div>
+    <div class="patent-pills">
+      <div class="patent-pill">US 7,840,427</div>
+      <div class="patent-pill">US 10,741,071</div>
+      <div class="patent-pill">US 10,916,138</div>
+      <div class="patent-pill">US 11,017,668</div>
+      <div class="patent-pill">US 11,164,456</div>
+    </div>
+  </div>
+</div>
+
+<!-- SUMMARY BAR -->
+<div class="summary-bar">
+  <div class="summary-inner">
+    <div class="summary-stat">
+      <div class="sum-num"><span class="sum-accent">34</span></div>
+      <div class="sum-label">Total Portfolio Items</div>
+    </div>
+    <div class="summary-stat">
+      <div class="sum-num"><span class="sum-accent">30</span></div>
+      <div class="sum-label">Issued Patents</div>
+    </div>
+    <div class="summary-stat">
+      <div class="sum-num"><span class="sum-accent">2</span></div>
+      <div class="sum-label">Allowed (Pre-Issue)</div>
+    </div>
+    <div class="summary-stat">
+      <div class="sum-num"><span class="sum-accent">1</span></div>
+      <div class="sum-label">Published Application</div>
+    </div>
+    <div class="summary-stat">
+      <div class="sum-num"><span class="sum-accent">2</span></div>
+      <div class="sum-label">Pending Applications</div>
+    </div>
+    <div class="summary-stat">
+      <div class="sum-num"><span class="sum-accent">2</span></div>
+      <div class="sum-label">Patent Families</div>
+    </div>
+    <div class="summary-stat">
+      <div class="sum-num"><span class="sum-accent">5</span></div>
+      <div class="sum-label">Asserted vs. Uber</div>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- FAMILY 1 -->
+  <div class="family-section">
+    <div class="family-header">
+      <div class="family-badge">Family 00199-0001</div>
+      <div class="family-title">Shared Transport System &amp; Service Network</div>
+      <div class="family-meta">
+        <strong>Priority: February 12, 2007</strong><br>
+        Original filing: February 12, 2008 · 33 US family members
+      </div>
+    </div>
+    <div class="section-intro">
+      All patents in this family trace to the foundational 2007 priority date covering Carma's core shared transport technology — including device-based journey registration, continuous coordinated proximity monitoring, and a comprehensive ridesharing platform ecosystem spanning pooled rides, pricing, ratings, identity verification, and real-time routing.
+    </div>
+    <div class="scroll-hint">Scroll horizontally if needed →</div>
+    <div class="sort-reset-bar" id="reset-bar-1"><span>Sorted by: <strong class="sort-label"></strong></span><button class="sort-reset-btn" onclick="resetSort('table-1', 'reset-bar-1')">↺ Reset</button></div>
+    <div class="table-wrap" style="overflow-x:auto;" id="table-1">
+      <table>
+        <thead>
+          <tr>
+            <th class="sortable">US Patent No.<span class="sort-icon"><span class="arr-up"></span><span class="arr-down"></span></span></th>
+            <th class="sortable">Attorney Ref<span class="sort-icon"><span class="arr-up"></span><span class="arr-down"></span></span></th>
+            <th class="sortable">Type<span class="sort-icon"><span class="arr-up"></span><span class="arr-down"></span></span></th>
+            <th class="sortable">Filing Date<span class="sort-icon"><span class="arr-up"></span><span class="arr-down"></span></span></th>
+            <th class="sortable">Issue Date<span class="sort-icon"><span class="arr-up"></span><span class="arr-down"></span></span></th>
+            <th class="sortable">Expiry<span class="sort-icon"><span class="arr-up"></span><span class="arr-down"></span></span></th>
+            <th class="sortable">Status<span class="sort-icon"><span class="arr-up"></span><span class="arr-down"></span></span></th>
+            <th class="sortable">Title<span class="sort-icon"><span class="arr-up"></span><span class="arr-down"></span></span></th>
+            <th class="sortable">Claim Summary<span class="sort-icon"><span class="arr-up"></span><span class="arr-down"></span></span></th>
+            <th class="sortable">Next Renewal<span class="sort-icon"><span class="arr-up"></span><span class="arr-down"></span></span></th>
+            <th class="sortable">Fee Est.<span class="sort-icon"><span class="arr-up"></span><span class="arr-down"></span></span></th>
+            <th class="sortable">Link<span class="sort-icon"><span class="arr-up"></span><span class="arr-down"></span></span></th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <!-- ROW 1 — ASSERTED -->
+          <tr class="asserted-row">
+            <td class="patent-num">
+              <a href="https://patents.google.com/patent/US7840427" target="_blank">US 7,840,427</a>
+              <br><span class="asserted-badge">⚖ Asserted · Ex. A</span>
+            </td>
+            <td class="atty-ref">00199-0001-00000</td>
+            <td class="type-cell">Non-Provisional</td>
+            <td class="date-cell"><div class="date-main">Feb 12, 2008</div><div class="date-sub">App. 12/069,656</div></td>
+            <td class="date-cell"><div class="date-main">Nov 23, 2010</div></td>
+            <td class="expiry-cell"><div class="expiry-year">Feb 12, 2028</div><div class="expiry-note">+ adjustments</div></td>
+            <td><span class="status-badge status-issued">Issued</span></td>
+            <td class="patent-title">SHARED TRANSPORT SYSTEM AND SERVICE NETWORK</td>
+            <td class="claim-summary">Foundational method using user and provider devices to register journey start/end via device communication, with continuous coordinated proximity monitoring to verify identity of transport user and provider vehicle.</td>
+            <td class="renewal-date renewal-na">Unavailable</td>
+            <td class="renewal-fee renewal-na">—</td>
+            <td><a class="link-btn" href="https://patents.google.com/patent/US7840427" target="_blank">↗ Google Patents</a><br><a class="link-btn" href="https://ppubs.uspto.gov/dirsearch-public/print/downloadPdf/7840427" target="_blank">↗ USPTO PDF</a></td>
+          </tr>
+
+          <!-- ROW 2 -->
+          <tr>
+            <td class="patent-num"><a href="https://patents.google.com/patent/US10083608" target="_blank">US 10,083,608</a></td>
+            <td class="atty-ref">00199-0001-01000</td>
+            <td class="type-cell">Divisional</td>
+            <td class="date-cell"><div class="date-main">Sep 28, 2010</div><div class="date-sub">App. 12/924,487</div></td>
+            <td class="date-cell"><div class="date-main">Sep 25, 2018</div></td>
+            <td class="expiry-cell"><div class="expiry-year">Sep 28, 2030</div></td>
+            <td><span class="status-badge status-issued">Issued</span></td>
+            <td class="patent-title">CONTINUOUS COORDINATED PROXIMITY MONITORING IN A SHARED TRANSPORT NETWORK</td>
+            <td class="claim-summary">Divisional of the parent; focuses on continuous coordinated proximity monitoring as the core method for verifying transport journeys in a shared network.</td>
+            <td class="renewal-date renewal-na">Unavailable</td>
+            <td class="renewal-fee renewal-na">—</td>
+            <td><a class="link-btn" href="https://patents.google.com/patent/US10083608" target="_blank">↗ Google Patents</a></td>
+          </tr>
+
+          <!-- ROW 3 -->
+          <tr>
+            <td class="patent-num"><a href="https://patents.google.com/patent/US11210947" target="_blank">US 11,210,947</a></td>
+            <td class="atty-ref">00199-0001-02000</td>
+            <td class="type-cell">Continuation</td>
+            <td class="date-cell"><div class="date-main">Aug 17, 2018</div><div class="date-sub">App. 15/998,864</div></td>
+            <td class="date-cell"><div class="date-main">Dec 28, 2021</div></td>
+            <td class="expiry-cell"><div class="expiry-year">Aug 17, 2038</div></td>
+            <td><span class="status-badge status-issued">Issued</span></td>
+            <td class="patent-title">CONTINUOUS COORDINATED PROXIMITY MONITORING IN A SHARED TRANSPORT NETWORK</td>
+            <td class="claim-summary">Continuation building on proximity monitoring methods; covers coordinated device communication for verifying journey start and end across the shared transport network.</td>
+            <td class="renewal-date renewal-na">Unavailable</td>
+            <td class="renewal-fee renewal-na">—</td>
+            <td><a class="link-btn" href="https://patents.google.com/patent/US11210947" target="_blank">↗ Google Patents</a></td>
+          </tr>
+
+          <!-- ROW 4 -->
+          <tr>
+            <td class="patent-num"><a href="https://patents.google.com/patent/US10453339" target="_blank">US 10,453,339</a></td>
+            <td class="atty-ref">00199-0001-03000</td>
+            <td class="type-cell">Continuation</td>
+            <td class="date-cell"><div class="date-main">Nov 21, 2018</div><div class="date-sub">App. 16/197,953</div></td>
+            <td class="date-cell"><div class="date-main">Oct 22, 2019</div></td>
+            <td class="expiry-cell"><div class="expiry-year">Nov 21, 2038</div></td>
+            <td><span class="status-badge status-issued">Issued</span></td>
+            <td class="patent-title">POOLED POINT-TO-POINT RIDE HAILING IN SHARED TRANSPORT SYSTEM</td>
+            <td class="claim-summary">Covers pooled/carpooling ride-hailing technology with point-to-point matching; allows multiple passengers to share a vehicle for individual origin-destination trips.</td>
+            <td class="renewal-date"><div class="renewal-date">Apr 22, 2027</div></td>
+            <td class="renewal-fee">$1,878 USD</td>
+            <td><a class="link-btn" href="https://patents.google.com/patent/US10453339" target="_blank">↗ Google Patents</a></td>
+          </tr>
+
+          <!-- ROW 5 -->
+          <tr>
+            <td class="patent-num"><a href="https://patents.google.com/patent/US10593206" target="_blank">US 10,593,206</a></td>
+            <td class="atty-ref">00199-0001-04000</td>
+            <td class="type-cell">Continuation</td>
+            <td class="date-cell"><div class="date-main">Nov 21, 2018</div><div class="date-sub">App. 16/198,000</div></td>
+            <td class="date-cell"><div class="date-main">Mar 17, 2020</div></td>
+            <td class="expiry-cell"><div class="expiry-year">Nov 21, 2038</div></td>
+            <td><span class="status-badge status-issued">Issued</span></td>
+            <td class="patent-title">RIDE HAILING WITH OPTIMAL PICK-UP POINTS IN SHARED TRANSPORT SYSTEM</td>
+            <td class="claim-summary">Methods for calculating and presenting optimal pick-up locations to transport users and providers, minimizing travel time and improving matching efficiency in ridesharing.</td>
+            <td class="renewal-date">Sep 17, 2027</td>
+            <td class="renewal-fee">$1,878 USD</td>
+            <td><a class="link-btn" href="https://patents.google.com/patent/US10593206" target="_blank">↗ Google Patents</a></td>
+          </tr>
+
+          <!-- ROW 6 -->
+          <tr>
+            <td class="patent-num"><a href="https://patents.google.com/patent/US10593207" target="_blank">US 10,593,207</a></td>
+            <td class="atty-ref">00199-0001-05000</td>
+            <td class="type-cell">Continuation</td>
+            <td class="date-cell"><div class="date-main">Feb 8, 2019</div><div class="date-sub">App. 16/271,199</div></td>
+            <td class="date-cell"><div class="date-main">Mar 17, 2020</div></td>
+            <td class="expiry-cell"><div class="expiry-year">Feb 8, 2039</div></td>
+            <td><span class="status-badge status-issued">Issued</span></td>
+            <td class="patent-title">DISPLAYING OPTIMAL TRANSPORTATION MODES BETWEEN TWO GEOGRAPHIC POINTS</td>
+            <td class="claim-summary">Systems and methods for presenting users with a ranked comparison of available transportation modes (rideshare, transit, walking, etc.) between two geographic points.</td>
+            <td class="renewal-date">Sep 17, 2027</td>
+            <td class="renewal-fee">$1,878 USD</td>
+            <td><a class="link-btn" href="https://patents.google.com/patent/US10593207" target="_blank">↗ Google Patents</a></td>
+          </tr>
+
+          <!-- ROW 7 -->
+          <tr>
+            <td class="patent-num"><a href="https://patents.google.com/patent/US10937315" target="_blank">US 10,937,315</a></td>
+            <td class="atty-ref">00199-0001-06000</td>
+            <td class="type-cell">Continuation</td>
+            <td class="date-cell"><div class="date-main">Feb 8, 2019</div><div class="date-sub">App. 16/271,627</div></td>
+            <td class="date-cell"><div class="date-main">Mar 2, 2021</div></td>
+            <td class="expiry-cell"><div class="expiry-year">Feb 8, 2039</div></td>
+            <td><span class="status-badge status-issued">Issued</span></td>
+            <td class="patent-title">DISPLAYING TRANSPORTATION MODES AND INFORMATION ON A MAP</td>
+            <td class="claim-summary">Map-based display system showing real-time availability, estimated arrival times, and comparative data for multiple transportation options overlaid on a geographic map.</td>
+            <td class="renewal-date renewal-na">Unavailable</td>
+            <td class="renewal-fee renewal-na">—</td>
+            <td><a class="link-btn" href="https://patents.google.com/patent/US10937315" target="_blank">↗ Google Patents</a></td>
+          </tr>
+
+          <!-- ROW 8 -->
+          <tr>
+            <td class="patent-num"><a href="https://patents.google.com/patent/US11295618" target="_blank">US 11,295,618</a></td>
+            <td class="atty-ref">00199-0001-07000</td>
+            <td class="type-cell">Continuation</td>
+            <td class="date-cell"><div class="date-main">Mar 1, 2019</div><div class="date-sub">App. 16/290,059</div></td>
+            <td class="date-cell"><div class="date-main">Apr 5, 2022</div></td>
+            <td class="expiry-cell"><div class="expiry-year">Mar 1, 2039</div></td>
+            <td><span class="status-badge status-issued">Issued</span></td>
+            <td class="patent-title">SYSTEMS AND METHODS FOR VERIFYING VEHICLE OCCUPANCY</td>
+            <td class="claim-summary">Technology for electronically verifying that designated passengers are present in a vehicle; supports HOV lane enforcement, carpooling compliance, and shared-ride verification.</td>
+            <td class="renewal-date renewal-na">Unavailable</td>
+            <td class="renewal-fee renewal-na">—</td>
+            <td><a class="link-btn" href="https://patents.google.com/patent/US11295618" target="_blank">↗ Google Patents</a></td>
+          </tr>
+
+          <!-- ROW 9 -->
+          <tr>
+            <td class="patent-num"><a href="https://patents.google.com/patent/US11263904" target="_blank">US 11,263,904</a></td>
+            <td class="atty-ref">00199-0001-08000</td>
+            <td class="type-cell">Continuation</td>
+            <td class="date-cell"><div class="date-main">Mar 1, 2019</div><div class="date-sub">App. 16/290,092</div></td>
+            <td class="date-cell"><div class="date-main">Mar 1, 2022</div></td>
+            <td class="expiry-cell"><div class="expiry-year">Mar 1, 2039</div></td>
+            <td><span class="status-badge status-issued">Issued</span></td>
+            <td class="patent-title">SYSTEMS AND METHODS FOR VERIFYING HOV JOURNEYS AND DETERMINING PREFERENTIAL ROAD ALLOWANCES</td>
+            <td class="claim-summary">Covers verification of high-occupancy vehicle journeys and the determination of preferential road access (HOV lanes, toll discounts) based on verified occupancy data from the shared transport system.</td>
+            <td class="renewal-date renewal-na">Unavailable</td>
+            <td class="renewal-fee renewal-na">—</td>
+            <td><a class="link-btn" href="https://patents.google.com/patent/US11263904" target="_blank">↗ Google Patents</a></td>
+          </tr>
+
+          <!-- ROW 10 -->
+          <tr>
+            <td class="patent-num"><a href="https://patents.google.com/patent/US11270584" target="_blank">US 11,270,584</a></td>
+            <td class="atty-ref">00199-0001-09000</td>
+            <td class="type-cell">Continuation</td>
+            <td class="date-cell"><div class="date-main">Mar 1, 2019</div><div class="date-sub">App. 16/290,120</div></td>
+            <td class="date-cell"><div class="date-main">Mar 8, 2022</div></td>
+            <td class="expiry-cell"><div class="expiry-year">Mar 1, 2039</div></td>
+            <td><span class="status-badge status-issued">Issued</span></td>
+            <td class="patent-title">SYSTEMS AND METHODS FOR DETERMINING FARE AMOUNTS FOR TRANSIT SERVICES</td>
+            <td class="claim-summary">Dynamic fare calculation methods for transit and rideshare services; computes fares based on distance, time, route data, and shared-journey parameters captured through the transport network.</td>
+            <td class="renewal-date renewal-na">Unavailable</td>
+            <td class="renewal-fee renewal-na">—</td>
+            <td><a class="link-btn" href="https://patents.google.com/patent/US11270584" target="_blank">↗ Google Patents</a></td>
+          </tr>
+
+          <!-- ROW 11 -->
+          <tr>
+            <td class="patent-num"><a href="https://patents.google.com/patent/US10854075" target="_blank">US 10,854,075</a></td>
+            <td class="atty-ref">00199-0001-10000</td>
+            <td class="type-cell">Continuation</td>
+            <td class="date-cell"><div class="date-main">Mar 29, 2019</div><div class="date-sub">App. 16/370,418</div></td>
+            <td class="date-cell"><div class="date-main">Dec 1, 2020</div></td>
+            <td class="expiry-cell"><div class="expiry-year">Mar 29, 2039</div></td>
+            <td><span class="status-badge status-issued">Issued</span></td>
+            <td class="patent-title">SYSTEMS AND METHODS FOR DETERMINING ROAD USAGE BY A TRANSPORT VEHICLE</td>
+            <td class="claim-summary">Methods for tracking and analyzing road usage by transport vehicles in a shared network; enables road usage pricing, congestion analysis, and infrastructure billing based on verified journey data.</td>
+            <td class="renewal-date renewal-na">Unavailable</td>
+            <td class="renewal-fee renewal-na">—</td>
+            <td><a class="link-btn" href="https://patents.google.com/patent/US10854075" target="_blank">↗ Google Patents</a></td>
+          </tr>
+
+          <!-- ROW 12 -->
+          <tr>
+            <td class="patent-num"><a href="https://patents.google.com/patent/US10943480" target="_blank">US 10,943,480</a></td>
+            <td class="atty-ref">00199-0001-11000</td>
+            <td class="type-cell">Continuation</td>
+            <td class="date-cell"><div class="date-main">Mar 29, 2019</div><div class="date-sub">App. 16/370,658</div></td>
+            <td class="date-cell"><div class="date-main">Mar 9, 2021</div></td>
+            <td class="expiry-cell"><div class="expiry-year">Mar 29, 2039</div></td>
+            <td><span class="status-badge status-issued">Issued</span></td>
+            <td class="patent-title">SELF-CORRECTING TRUST SYSTEM IN A SHARED TRANSPORT NETWORK</td>
+            <td class="claim-summary">Adaptive trust and reputation system that dynamically adjusts trust scores for participants in the shared transport network based on verified journey data, feedback, and behavioral signals.</td>
+            <td class="renewal-date renewal-na">Unavailable</td>
+            <td class="renewal-fee renewal-na">—</td>
+            <td><a class="link-btn" href="https://patents.google.com/patent/US10943480" target="_blank">↗ Google Patents</a></td>
+          </tr>
+
+          <!-- ROW 13 -->
+          <tr>
+            <td class="patent-num"><a href="https://patents.google.com/patent/US10803749" target="_blank">US 10,803,749</a></td>
+            <td class="atty-ref">00199-0001-12000</td>
+            <td class="type-cell">Continuation</td>
+            <td class="date-cell"><div class="date-main">Oct 31, 2019</div><div class="date-sub">App. 16/670,015</div></td>
+            <td class="date-cell"><div class="date-main">Oct 13, 2020</div></td>
+            <td class="expiry-cell"><div class="expiry-year">Oct 31, 2039</div></td>
+            <td><span class="status-badge status-issued">Issued</span></td>
+            <td class="patent-title">SYSTEMS AND METHODS FOR GENERATING RECEIPTS AND APPLYING RATINGS FOR TRANSPORT SERVICES</td>
+            <td class="claim-summary">Systems for automated receipt generation and post-journey rating of transport services; integrates journey verification data to produce trusted records and facilitate passenger/driver ratings.</td>
+            <td class="renewal-date renewal-na">Unavailable</td>
+            <td class="renewal-fee renewal-na">—</td>
+            <td><a class="link-btn" href="https://patents.google.com/patent/US10803749" target="_blank">↗ Google Patents</a></td>
+          </tr>
+
+          <!-- ROW 14 -->
+          <tr>
+            <td class="patent-num"><a href="https://patents.google.com/patent/US11538339" target="_blank">US 11,538,339</a></td>
+            <td class="atty-ref">00199-0001-13000</td>
+            <td class="type-cell">Continuation</td>
+            <td class="date-cell"><div class="date-main">Oct 31, 2019</div><div class="date-sub">App. 16/670,082</div></td>
+            <td class="date-cell"><div class="date-main">Dec 27, 2022</div></td>
+            <td class="expiry-cell"><div class="expiry-year">Oct 31, 2039</div></td>
+            <td><span class="status-badge status-issued">Issued</span></td>
+            <td class="patent-title">SYSTEMS AND METHODS FOR GENERATING VEHICLE INDICATORS FOR SIGNALING ASSIGNED TRANSPORT VEHICLES</td>
+            <td class="claim-summary">Technology for generating digital or visual vehicle indicators that signal assigned transport vehicles to transport users; improves identification and matching at pick-up locations.</td>
+            <td class="renewal-date">Jun 27, 2026</td>
+            <td class="renewal-fee">$1,122 USD</td>
+            <td><a class="link-btn" href="https://patents.google.com/patent/US11538339" target="_blank">↗ Google Patents</a></td>
+          </tr>
+
+          <!-- ROW 15 -->
+          <tr>
+            <td class="patent-num"><a href="https://patents.google.com/patent/US10593208" target="_blank">US 10,593,208</a></td>
+            <td class="atty-ref">00199-0001-14000</td>
+            <td class="type-cell">Continuation</td>
+            <td class="date-cell"><div class="date-main">Oct 31, 2019</div><div class="date-sub">App. 16/670,151</div></td>
+            <td class="date-cell"><div class="date-main">Mar 17, 2020</div></td>
+            <td class="expiry-cell"><div class="expiry-year">Oct 31, 2039</div></td>
+            <td><span class="status-badge status-issued">Issued</span></td>
+            <td class="patent-title">SYSTEMS AND METHODS FOR ELECTRONIC RIDER VERIFICATION IN A SHARED TRANSPORT NETWORK</td>
+            <td class="claim-summary">Electronic verification methods confirming the identity of riders in a shared transport network; uses device-based authentication to ensure only verified users can complete bookings.</td>
+            <td class="renewal-date">Sep 17, 2027</td>
+            <td class="renewal-fee">$1,878 USD</td>
+            <td><a class="link-btn" href="https://patents.google.com/patent/US10593208" target="_blank">↗ Google Patents</a></td>
+          </tr>
+
+          <!-- ROW 16 — ASSERTED -->
+          <tr class="asserted-row">
+            <td class="patent-num">
+              <a href="https://patents.google.com/patent/US10916138" target="_blank">US 10,916,138</a>
+              <br><span class="asserted-badge">⚖ Asserted</span>
+            </td>
+            <td class="atty-ref">00199-0001-15000</td>
+            <td class="type-cell">Continuation</td>
+            <td class="date-cell"><div class="date-main">Oct 31, 2019</div><div class="date-sub">App. 16/670,220</div></td>
+            <td class="date-cell"><div class="date-main">Feb 9, 2021</div></td>
+            <td class="expiry-cell"><div class="expiry-year">Oct 31, 2039</div></td>
+            <td><span class="status-badge status-issued">Issued</span></td>
+            <td class="patent-title">SYSTEMS AND METHODS FOR UTILIZING A SHARED TRANSPORT NETWORK FOR DELIVERY OF GOODS</td>
+            <td class="claim-summary">Applies the shared transport platform to goods delivery; connects delivery requesters with transport providers using the same proximity verification and journey registration framework.</td>
+            <td class="renewal-date renewal-na">Unavailable</td>
+            <td class="renewal-fee renewal-na">—</td>
+            <td><a class="link-btn" href="https://patents.google.com/patent/US10916138" target="_blank">↗ Google Patents</a></td>
+          </tr>
+
+          <!-- ROW 17 -->
+          <tr>
+            <td class="patent-num"><a href="https://patents.google.com/patent/US10783783" target="_blank">US 10,783,783</a></td>
+            <td class="atty-ref">00199-0001-16000</td>
+            <td class="type-cell">Continuation</td>
+            <td class="date-cell"><div class="date-main">Nov 27, 2019</div><div class="date-sub">App. 16/698,161</div></td>
+            <td class="date-cell"><div class="date-main">Sep 22, 2020</div></td>
+            <td class="expiry-cell"><div class="expiry-year">Nov 27, 2039</div></td>
+            <td><span class="status-badge status-issued">Issued</span></td>
+            <td class="patent-title">SYSTEMS AND METHODS FOR GENERATING PROXIMITY ALERTS IN A SHARED TRANSPORT SYSTEM</td>
+            <td class="claim-summary">Real-time proximity alert generation notifying transport users and providers of each other's approach; improves pick-up efficiency and reduces wait times in the shared network.</td>
+            <td class="renewal-date renewal-na">Unavailable</td>
+            <td class="renewal-fee renewal-na">—</td>
+            <td><a class="link-btn" href="https://patents.google.com/patent/US10783783" target="_blank">↗ Google Patents</a></td>
+          </tr>
+
+          <!-- ROW 18 -->
+          <tr>
+            <td class="patent-num"><a href="https://patents.google.com/patent/US10672271" target="_blank">US 10,672,271</a></td>
+            <td class="atty-ref">00199-0001-17000</td>
+            <td class="type-cell">Continuation</td>
+            <td class="date-cell"><div class="date-main">Sep 9, 2019</div><div class="date-sub">App. 16/564,819</div></td>
+            <td class="date-cell"><div class="date-main">Jun 2, 2020</div></td>
+            <td class="expiry-cell"><div class="expiry-year">Sep 9, 2039</div></td>
+            <td><span class="status-badge status-issued">Issued</span></td>
+            <td class="patent-title">SYSTEMS AND METHODS FOR DETECTING CONTINUED OCCUPANCY OF TRANSPORT USERS IN TRANSPORT VEHICLES</td>
+            <td class="claim-summary">Continuous occupancy detection methods that verify transport users remain in vehicles throughout the journey; prevents fraud and ensures fare accuracy in shared transport scenarios.</td>
+            <td class="renewal-date">Dec 2, 2027</td>
+            <td class="renewal-fee">$1,878 USD</td>
+            <td><a class="link-btn" href="https://patents.google.com/patent/US10672271" target="_blank">↗ Google Patents</a></td>
+          </tr>
+
+          <!-- ROW 19 -->
+          <tr>
+            <td class="patent-num"><a href="https://patents.google.com/patent/US11250705" target="_blank">US 11,250,705</a></td>
+            <td class="atty-ref">00199-0001-18000</td>
+            <td class="type-cell">Continuation</td>
+            <td class="date-cell"><div class="date-main">Nov 27, 2019</div><div class="date-sub">App. 16/698,242</div></td>
+            <td class="date-cell"><div class="date-main">Feb 15, 2022</div></td>
+            <td class="expiry-cell"><div class="expiry-year">Nov 27, 2039</div></td>
+            <td><span class="status-badge status-issued">Issued</span></td>
+            <td class="patent-title">SYSTEMS AND METHODS FOR PERFORMING TRAFFIC FLOW DATA ANALYTICS IN A SHARED TRANSPORT SYSTEM</td>
+            <td class="claim-summary">Traffic flow analytics platform leveraging aggregated journey data from the shared transport network to analyze, model, and predict traffic patterns at scale.</td>
+            <td class="renewal-date renewal-na">Unavailable</td>
+            <td class="renewal-fee renewal-na">—</td>
+            <td><a class="link-btn" href="https://patents.google.com/patent/US11250705" target="_blank">↗ Google Patents</a></td>
+          </tr>
+
+          <!-- ROW 20 -->
+          <tr>
+            <td class="patent-num"><a href="https://patents.google.com/patent/US10748420" target="_blank">US 10,748,420</a></td>
+            <td class="atty-ref">00199-0001-19000</td>
+            <td class="type-cell">Continuation</td>
+            <td class="date-cell"><div class="date-main">Nov 27, 2019</div><div class="date-sub">App. 16/698,312</div></td>
+            <td class="date-cell"><div class="date-main">Aug 18, 2020</div></td>
+            <td class="expiry-cell"><div class="expiry-year">Nov 27, 2039</div></td>
+            <td><span class="status-badge status-issued">Issued</span></td>
+            <td class="patent-title">SYSTEMS AND METHODS FOR RE-ALLOCATING VEHICLES IN A SHARED TRANSPORT SYSTEM</td>
+            <td class="claim-summary">Dynamic vehicle reallocation algorithms that reassign transport providers to new requests based on real-time demand, location, and availability signals within the shared network.</td>
+            <td class="renewal-date renewal-na">Unavailable</td>
+            <td class="renewal-fee renewal-na">—</td>
+            <td><a class="link-btn" href="https://patents.google.com/patent/US10748420" target="_blank">↗ Google Patents</a></td>
+          </tr>
+
+          <!-- ROW 21 — ASSERTED -->
+          <tr class="asserted-row">
+            <td class="patent-num">
+              <a href="https://patents.google.com/patent/US10741071" target="_blank">US 10,741,071</a>
+              <br><span class="asserted-badge">⚖ Asserted</span>
+            </td>
+            <td class="atty-ref">00199-0001-20000</td>
+            <td class="type-cell">Continuation</td>
+            <td class="date-cell"><div class="date-main">Nov 27, 2019</div><div class="date-sub">App. 16/698,401</div></td>
+            <td class="date-cell"><div class="date-main">Aug 11, 2020</div></td>
+            <td class="expiry-cell"><div class="expiry-year">Nov 27, 2039</div></td>
+            <td><span class="status-badge status-issued">Issued</span></td>
+            <td class="patent-title">SYSTEMS AND METHODS FOR PROXY COMMUNICATION IN A SHARED TRANSPORT SYSTEM</td>
+            <td class="claim-summary">Proxy communication layer enabling anonymized, verified communication between transport users and providers through the shared transport platform without revealing personal contact details.</td>
+            <td class="renewal-date">Feb 11, 2028</td>
+            <td class="renewal-fee">$1,878 USD</td>
+            <td><a class="link-btn" href="https://patents.google.com/patent/US10741071" target="_blank">↗ Google Patents</a></td>
+          </tr>
+
+          <!-- ROW 22 — ASSERTED -->
+          <tr class="asserted-row">
+            <td class="patent-num">
+              <a href="https://patents.google.com/patent/US11017668" target="_blank">US 11,017,668</a>
+              <br><span class="asserted-badge">⚖ Asserted</span>
+            </td>
+            <td class="atty-ref">00199-0001-21000</td>
+            <td class="type-cell">Continuation</td>
+            <td class="date-cell"><div class="date-main">Aug 3, 2020</div><div class="date-sub">App. 16/983,598</div></td>
+            <td class="date-cell"><div class="date-main">May 25, 2021</div></td>
+            <td class="expiry-cell"><div class="expiry-year">Aug 3, 2040</div></td>
+            <td><span class="status-badge status-issued">Issued</span></td>
+            <td class="patent-title">SYSTEMS AND METHODS FOR MANAGING ANOMALOUS CONDITIONS IN A SHARED TRANSPORT SYSTEM</td>
+            <td class="claim-summary">Detection and management systems for anomalous events (route deviations, unexpected stops, safety incidents) within shared transport journeys, with automated alert and resolution workflows.</td>
+            <td class="renewal-date renewal-na">Unavailable</td>
+            <td class="renewal-fee renewal-na">—</td>
+            <td><a class="link-btn" href="https://patents.google.com/patent/US11017668" target="_blank">↗ Google Patents</a></td>
+          </tr>
+
+          <!-- ROW 23 -->
+          <tr>
+            <td class="patent-num"><a href="https://patents.google.com/patent/US11308803" target="_blank">US 11,308,803</a></td>
+            <td class="atty-ref">00199-0001-22000</td>
+            <td class="type-cell">Continuation</td>
+            <td class="date-cell"><div class="date-main">Jun 30, 2020</div><div class="date-sub">App. 16/917,337</div></td>
+            <td class="date-cell"><div class="date-main">Apr 19, 2022</div></td>
+            <td class="expiry-cell"><div class="expiry-year">Jun 30, 2040</div></td>
+            <td><span class="status-badge status-issued">Issued</span></td>
+            <td class="patent-title">SYSTEMS AND METHODS FOR IDENTITY VERIFICATION IN A SHARED TRANSPORT SYSTEM</td>
+            <td class="claim-summary">Comprehensive identity verification framework for participants in the shared transport system; verifies user and provider credentials before and during journeys using multi-factor methods.</td>
+            <td class="renewal-date renewal-na">Unavailable</td>
+            <td class="renewal-fee renewal-na">—</td>
+            <td><a class="link-btn" href="https://patents.google.com/patent/US11308803" target="_blank">↗ Google Patents</a></td>
+          </tr>
+
+          <!-- ROW 24 -->
+          <tr>
+            <td class="patent-num"><a href="https://patents.google.com/patent/US11302190" target="_blank">US 11,302,190</a></td>
+            <td class="atty-ref">00199-0001-23000</td>
+            <td class="type-cell">Continuation</td>
+            <td class="date-cell"><div class="date-main">Sep 14, 2020</div><div class="date-sub">App. 17/019,674</div></td>
+            <td class="date-cell"><div class="date-main">Apr 12, 2022</div></td>
+            <td class="expiry-cell"><div class="expiry-year">Sep 14, 2040</div></td>
+            <td><span class="status-badge status-issued">Issued</span></td>
+            <td class="patent-title">SYSTEMS AND METHODS FOR A TRUSTED TRANSIT NETWORK IN A SHARED TRANSPORT SYSTEM</td>
+            <td class="claim-summary">Architecture for building a trusted transit network overlay on top of a shared transport system, enabling verified, trust-scored interactions between all participants across the platform.</td>
+            <td class="renewal-date renewal-na">Unavailable</td>
+            <td class="renewal-fee renewal-na">—</td>
+            <td><a class="link-btn" href="https://patents.google.com/patent/US11302190" target="_blank">↗ Google Patents</a></td>
+          </tr>
+
+          <!-- ROW 25 -->
+          <tr>
+            <td class="patent-num"><a href="https://patents.google.com/patent/US11568742" target="_blank">US 11,568,742</a></td>
+            <td class="atty-ref">00199-0001-24000</td>
+            <td class="type-cell">Continuation</td>
+            <td class="date-cell"><div class="date-main">Jan 22, 2021</div><div class="date-sub">App. 17/155,221</div></td>
+            <td class="date-cell"><div class="date-main">Jan 31, 2023</div></td>
+            <td class="expiry-cell"><div class="expiry-year">Jan 22, 2041</div></td>
+            <td><span class="status-badge status-issued">Issued</span></td>
+            <td class="patent-title">SYSTEMS AND METHODS FOR UTILIZING A SHARED TRANSPORT NETWORK WITH A TRANSPORT PROVIDER DESTINATION MODE</td>
+            <td class="claim-summary">Destination mode feature allowing transport providers to filter ride requests along their own desired route, matching passengers traveling in the provider's intended direction.</td>
+            <td class="renewal-date">Jul 31, 2026</td>
+            <td class="renewal-fee">$1,122 USD</td>
+            <td><a class="link-btn" href="https://patents.google.com/patent/US11568742" target="_blank">↗ Google Patents</a></td>
+          </tr>
+
+          <!-- ROW 26 — ASSERTED -->
+          <tr class="asserted-row">
+            <td class="patent-num">
+              <a href="https://patents.google.com/patent/US11164456" target="_blank">US 11,164,456</a>
+              <br><span class="asserted-badge">⚖ Asserted · Ex. E</span>
+            </td>
+            <td class="atty-ref">00199-0001-25000</td>
+            <td class="type-cell">Continuation</td>
+            <td class="date-cell"><div class="date-main">Apr 21, 2021</div><div class="date-sub">App. 17/236,491</div></td>
+            <td class="date-cell"><div class="date-main">Nov 2, 2021</div></td>
+            <td class="expiry-cell"><div class="expiry-year">Apr 21, 2041</div></td>
+            <td><span class="status-badge status-issued">Issued</span></td>
+            <td class="patent-title">SYSTEMS AND METHODS FOR MATCHING PICK-UP REQUESTS WITH TRANSPORT PROVIDERS, TRACKING TRIP PROGRESS, AND ENABLING PROVIDER RATINGS</td>
+            <td class="claim-summary">End-to-end platform methods for matching ride requests to drivers, monitoring trip progress in real time, and collecting post-journey ratings — core to modern rideshare platform operation.</td>
+            <td class="renewal-date renewal-na">Unavailable</td>
+            <td class="renewal-fee renewal-na">—</td>
+            <td><a class="link-btn" href="https://patents.google.com/patent/US11164456" target="_blank">↗ Google Patents</a></td>
+          </tr>
+
+          <!-- ROW 27 -->
+          <tr>
+            <td class="patent-num"><a href="https://patents.google.com/patent/US11538340" target="_blank">US 11,538,340</a></td>
+            <td class="atty-ref">00199-0001-26000</td>
+            <td class="type-cell">Continuation</td>
+            <td class="date-cell"><div class="date-main">Mar 24, 2022</div><div class="date-sub">App. 17/703,034</div></td>
+            <td class="date-cell"><div class="date-main">Dec 27, 2022</div></td>
+            <td class="expiry-cell"><div class="expiry-year">Mar 24, 2042</div></td>
+            <td><span class="status-badge status-issued">Issued</span></td>
+            <td class="patent-title">SYSTEMS AND METHODS FOR VERIFYING A SHARED JOURNEY IN A SHARED TRANSPORT SYSTEM</td>
+            <td class="claim-summary">Methods for verifying that a journey was genuinely shared between multiple transport users; creates a tamper-resistant record of shared occupancy for billing, compliance, and trust purposes.</td>
+            <td class="renewal-date">Jun 27, 2026</td>
+            <td class="renewal-fee">$1,122 USD</td>
+            <td><a class="link-btn" href="https://patents.google.com/patent/US11538340" target="_blank">↗ Google Patents</a></td>
+          </tr>
+
+          <!-- ROW 28 -->
+          <tr>
+            <td class="patent-num"><a href="https://patents.google.com/patent/US11574542" target="_blank">US 11,574,542</a></td>
+            <td class="atty-ref">00199-0001-27000</td>
+            <td class="type-cell">Continuation</td>
+            <td class="date-cell"><div class="date-main">Jul 9, 2021</div><div class="date-sub">App. 17/305,553</div></td>
+            <td class="date-cell"><div class="date-main">Feb 7, 2023</div></td>
+            <td class="expiry-cell"><div class="expiry-year">Jul 9, 2041</div></td>
+            <td><span class="status-badge status-issued">Issued</span></td>
+            <td class="patent-title">SYSTEMS AND METHODS FOR PROVIDING SAFETY FOR DRIVERS AND RIDERS IN A SHARED TRANSPORT SYSTEM</td>
+            <td class="claim-summary">Integrated safety systems for both drivers and riders including anomaly detection, emergency alerts, journey monitoring, and safety scoring within the shared transport platform.</td>
+            <td class="renewal-date">Aug 7, 2026</td>
+            <td class="renewal-fee">$1,122 USD</td>
+            <td><a class="link-btn" href="https://patents.google.com/patent/US11574542" target="_blank">↗ Google Patents</a></td>
+          </tr>
+
+          <!-- ROW 29 -->
+          <tr>
+            <td class="patent-num"><a href="https://patents.google.com/patent/US11288960" target="_blank">US 11,288,960</a></td>
+            <td class="atty-ref">00199-0001-35000</td>
+            <td class="type-cell">Continuation</td>
+            <td class="date-cell"><div class="date-main">Sep 13, 2021</div><div class="date-sub">App. 17/473,698</div></td>
+            <td class="date-cell"><div class="date-main">Mar 29, 2022</div></td>
+            <td class="expiry-cell"><div class="expiry-year">Sep 13, 2041</div></td>
+            <td><span class="status-badge status-issued">Issued</span></td>
+            <td class="patent-title">SYSTEMS AND METHODS FOR APPLYING RATINGS FOR TRANSPORT SERVICES</td>
+            <td class="claim-summary">Rating application methods for transport services; processes post-journey feedback from users and providers, applies ratings to participant profiles, and uses them to inform future matching decisions.</td>
+            <td class="renewal-date renewal-na">Unavailable</td>
+            <td class="renewal-fee renewal-na">—</td>
+            <td><a class="link-btn" href="https://patents.google.com/patent/US11288960" target="_blank">↗ Google Patents</a></td>
+          </tr>
+
+          <!-- ROW 30 -->
+          <tr>
+            <td class="patent-num"><a href="https://patents.google.com/patent/US12087162" target="_blank">US 12,087,162</a></td>
+            <td class="atty-ref">00199-0001-28000</td>
+            <td class="type-cell">Continuation</td>
+            <td class="date-cell"><div class="date-main">Feb 6, 2023</div><div class="date-sub">App. 18/164,816</div></td>
+            <td class="date-cell"><div class="date-main">Sep 10, 2024</div></td>
+            <td class="expiry-cell"><div class="expiry-year">Feb 6, 2043</div></td>
+            <td><span class="status-badge status-issued">Issued</span></td>
+            <td class="patent-title">SYSTEMS AND METHODS FOR ETA CALCULATION IN A SHARED TRANSPORT SYSTEM</td>
+            <td class="claim-summary">Real-time ETA calculation systems tailored to shared transport dynamics; incorporates multi-stop routing, occupancy states, and live traffic conditions to deliver accurate arrival predictions.</td>
+            <td class="renewal-date">Mar 10, 2028</td>
+            <td class="renewal-fee">$1,122 USD</td>
+            <td><a class="link-btn" href="https://patents.google.com/patent/US12087162" target="_blank">↗ Google Patents</a></td>
+          </tr>
+
+          <!-- ROW 31 -->
+          <tr>
+            <td class="patent-num"><a href="https://patents.google.com/patent/US12579890" target="_blank">US 12,579,890</a></td>
+            <td class="atty-ref">00199-0001-29000</td>
+            <td class="type-cell">Continuation</td>
+            <td class="date-cell"><div class="date-main">Dec 22, 2022</div><div class="date-sub">App. 18/145,511</div></td>
+            <td class="date-cell"><div class="date-main">Mar 17, 2026</div><div class="date-sub" style="color:var(--blue-d)">Recently Issued</div></td>
+            <td class="expiry-cell"><div class="expiry-year">Dec 22, 2042</div></td>
+            <td><span class="status-badge status-issued">Issued</span></td>
+            <td class="patent-title">RIDE MATCHING TO A DESTINATION CATEGORY OR PURPOSE IN A SHARED TRANSPORT SYSTEM</td>
+            <td class="claim-summary">Innovative ride-matching method allowing users to specify a destination category or purpose (e.g., "pharmacy," "coffee shop") rather than an exact address; driver navigates to a qualifying nearby location.</td>
+            <td class="renewal-date renewal-na">Unavailable</td>
+            <td class="renewal-fee renewal-na">—</td>
+            <td><a class="link-btn" href="https://patents.google.com/patent/US12579890" target="_blank">↗ Google Patents</a></td>
+          </tr>
+
+          <!-- ROW 32 — ALLOWED -->
+          <tr class="pending-row">
+            <td class="patent-num">
+              <span class="patent-pending">App. 19/337,341</span>
+            </td>
+            <td class="atty-ref">00199-0001-31000</td>
+            <td class="type-cell">Continuation</td>
+            <td class="date-cell"><div class="date-main">Sep 23, 2025</div></td>
+            <td class="date-cell"><div class="date-main">—</div></td>
+            <td class="expiry-cell"><div class="expiry-note">Pending Issue</div></td>
+            <td><span class="status-badge status-allowed">Allowed</span></td>
+            <td class="patent-title">SYSTEMS AND METHODS FOR DELIVERY VERIFICATION IN A SHARED TRANSPORT NETWORK</td>
+            <td class="claim-summary">Delivery verification using PIN-based confirmation and proximity monitoring to verify successful delivery of goods; transport provider and recipient exchange a PIN to confirm receipt at drop-off location.</td>
+            <td class="renewal-date renewal-na">—</td>
+            <td class="renewal-fee renewal-na">—</td>
+            <td><span style="font-size:11px;color:var(--text-light);">Issue Pending</span></td>
+          </tr>
+
+          <!-- ROW 33 — PUBLISHED -->
+          <tr class="pending-row">
+            <td class="patent-num">
+              <span class="patent-pending">App. 18/797,008</span>
+              <br><span style="font-size:10px;color:var(--text-light);">Pub. 20250037582</span>
+            </td>
+            <td class="atty-ref">00199-0001-30000</td>
+            <td class="type-cell">Continuation</td>
+            <td class="date-cell"><div class="date-main">Aug 7, 2024</div></td>
+            <td class="date-cell"><div class="date-main">—</div></td>
+            <td class="expiry-cell"><div class="expiry-note">Pending</div></td>
+            <td><span class="status-badge status-published">Published</span></td>
+            <td class="patent-title">SYSTEMS AND METHODS FOR DELIVERY VERIFICATION IN A SHARED TRANSPORT NETWORK</td>
+            <td class="claim-summary">Published application covering delivery verification in the shared transport network; claims PIN-exchange system to confirm goods delivery, with proximity verification as an additional layer.</td>
+            <td class="renewal-date renewal-na">—</td>
+            <td class="renewal-fee renewal-na">—</td>
+            <td><a class="link-btn" href="https://patents.google.com/patent/US20250037582" target="_blank">↗ Google Patents</a></td>
+          </tr>
+
+          <!-- ROW 34 — PENDING -->
+          <tr class="pending-row">
+            <td class="patent-num">
+              <span class="patent-pending">App. 19/541,860</span>
+            </td>
+            <td class="atty-ref">00199-0001-32000</td>
+            <td class="type-cell">Continuation</td>
+            <td class="date-cell"><div class="date-main">Feb 17, 2026</div></td>
+            <td class="date-cell"><div class="date-main">—</div></td>
+            <td class="expiry-cell"><div class="expiry-note">Pending</div></td>
+            <td><span class="status-badge status-pending">Pending</span></td>
+            <td class="patent-title">RIDE MATCHING TO A DESTINATION CATEGORY OR PURPOSE IN A SHARED TRANSPORT SYSTEM</td>
+            <td class="claim-summary">Continuation pursuing additional claims for destination-category ride matching; expands claim scope for matching transport users to providers based on categorical or purposive destination input.</td>
+            <td class="renewal-date renewal-na">—</td>
+            <td class="renewal-fee renewal-na">—</td>
+            <td><span style="font-size:11px;color:var(--text-light);">Filed 2026</span></td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- FAMILY 2 -->
+  <div class="family-section">
+    <div class="family-header">
+      <div class="family-badge">Family 00199-0004</div>
+      <div class="family-title">Vehicle Identification Through Data Fusion</div>
+      <div class="family-meta">
+        <strong>Priority: December 5, 2025</strong><br>
+        New family · Track One expedited examination requested
+      </div>
+    </div>
+    <div class="section-intro">
+      A new, independent patent family filed December 5, 2025 covering next-generation vehicle identification technology using multi-sensor data fusion. Filed with the USPTO's Track One Prioritized Examination program, targeting an expedited examination timeline.
+    </div>
+    <div class="sort-reset-bar" id="reset-bar-2"><span>Sorted by: <strong class="sort-label"></strong></span><button class="sort-reset-btn" onclick="resetSort('table-2', 'reset-bar-2')">↺ Reset</button></div>
+    <div class="table-wrap" id="table-2">
+      <table>
+        <thead>
+          <tr>
+            <th class="sortable">US Patent No.<span class="sort-icon"><span class="arr-up"></span><span class="arr-down"></span></span></th>
+            <th class="sortable">Attorney Ref<span class="sort-icon"><span class="arr-up"></span><span class="arr-down"></span></span></th>
+            <th class="sortable">Type<span class="sort-icon"><span class="arr-up"></span><span class="arr-down"></span></span></th>
+            <th class="sortable">Filing Date<span class="sort-icon"><span class="arr-up"></span><span class="arr-down"></span></span></th>
+            <th class="sortable">Issue Date<span class="sort-icon"><span class="arr-up"></span><span class="arr-down"></span></span></th>
+            <th class="sortable">Expiry<span class="sort-icon"><span class="arr-up"></span><span class="arr-down"></span></span></th>
+            <th class="sortable">Status<span class="sort-icon"><span class="arr-up"></span><span class="arr-down"></span></span></th>
+            <th class="sortable">Title<span class="sort-icon"><span class="arr-up"></span><span class="arr-down"></span></span></th>
+            <th class="sortable">Claim Summary<span class="sort-icon"><span class="arr-up"></span><span class="arr-down"></span></span></th>
+            <th class="sortable">Next Renewal<span class="sort-icon"><span class="arr-up"></span><span class="arr-down"></span></span></th>
+            <th class="sortable">Fee Est.<span class="sort-icon"><span class="arr-up"></span><span class="arr-down"></span></span></th>
+            <th class="sortable">Link<span class="sort-icon"><span class="arr-up"></span><span class="arr-down"></span></span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="pending-row">
+            <td class="patent-num">
+              <span class="patent-pending">App. 19/410,232</span>
+            </td>
+            <td class="atty-ref">00199-0004-00000</td>
+            <td class="type-cell">Non-Provisional<br><span style="color:var(--blue);font-size:10px;font-weight:600;">★ Track One</span></td>
+            <td class="date-cell"><div class="date-main">Dec 5, 2025</div></td>
+            <td class="date-cell"><div class="date-main">—</div></td>
+            <td class="expiry-cell"><div class="expiry-note">~Dec 2045</div><div class="expiry-note">(if issued)</div></td>
+            <td><span class="status-badge status-pending">Pending</span></td>
+            <td class="patent-title">SYSTEMS AND METHODS FOR VEHICLE IDENTIFICATION THROUGH DATA FUSION</td>
+            <td class="claim-summary">Novel multi-source data fusion approach for vehicle identification; combines sensor data streams (visual, location, telemetric) to create a reliable, tamper-resistant vehicle identity record for use in transport platform authentication and verification.</td>
+            <td class="renewal-date renewal-na">—</td>
+            <td class="renewal-fee renewal-na">—</td>
+            <td><span style="font-size:11px;color:var(--text-light);">Filed Dec 2025</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- FOOTNOTES -->
+  <div class="footnotes">
+    <h4>Notes &amp; Disclaimers</h4>
+    <ul>
+      <li><strong>Asserted Patents:</strong> Five patents confirmed asserted against Uber Technologies in Civil Action No. 2:25-CV-29 (E.D. Tex.) per Form AO-120 filed January 14, 2025. Exhibits A and E confirmed as US 7,840,427 and US 11,164,456 respectively.</li>
+      <li><strong>Expiry Dates:</strong> Calculated as 20 years from U.S. filing date (exact date shown). Actual expiry may be adjusted for Patent Term Adjustments (PTA), terminal disclaimers, or maintenance fee status. All patents current on maintenance fees.</li>
+      <li><strong>Renewal Fees:</strong> Data sourced from Clarivate / IP Platform (Annuity Schedule). "Unavailable" indicates fee schedule not yet generated for that maintenance period (patent may be in an earlier maintenance window or data pending).</li>
+      <li><strong>Links:</strong> Google Patents and USPTO links provided for each issued patent. Pending applications accessible via USPTO Patent Center (ppubs.uspto.gov) by application number.</li>
+      <li><strong>Priority Date:</strong> All Family 00199-0001 patents claim priority to a provisional application filed February 12, 2007 by the Irish inventors. Family 00199-0004 is an independent new filing as of December 5, 2025.</li>
+      <li><strong>Assignee:</strong> Patents are assigned variously to Carma Technology Ltd. and Carma Technology Limited (same entity). Carma Technology Corp. is a co-plaintiff in the Uber litigation.</li>
+      <li><strong>Track One:</strong> Application 19/410,232 was filed with a Track One Prioritized Examination request, which targets first Office Action within approximately 3 months and total pendency under 12 months.</li>
+    </ul>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer class="page-footer">
+  <div class="footer-inner">
+    <div class="footer-legal">
+      © 2026 Carma Technology Corporation &amp; Carma Technology Ltd. · All patent data sourced from USPTO records and Clarivate IP Platform as of March 2026.<br>
+      This document is confidential and intended for internal use by Carma executives and board members only.
+    </div>
+    <div class="footer-conf">Confidential · Attorney-Client Privileged</div>
+  </div>
+</footer>
+
+
+<script>
+(function() {
+  // Store original row order per table
+  const origOrder = {};
+
+  function getTableId(th) {
+    return th.closest('table').parentElement.id || th.closest('table').id;
+  }
+
+  function cellText(td) {
+    if (!td) return '';
+    // Try to extract meaningful text — strip badges, sub-labels etc.
+    const clone = td.cloneNode(true);
+    // Remove badge/sub spans that skew sort
+    clone.querySelectorAll('.asserted-badge, .date-sub, .expiry-note, .patent-pending').forEach(el => el.remove());
+    return clone.textContent.trim().replace(/\s+/g, ' ');
+  }
+
+  function parseVal(str) {
+    // Date: "Jan 22, 2041" or "Feb 6, 2043"
+    const dateMatch = str.match(/^([A-Za-z]+)\s+(\d+),?\s+(\d{4})/);
+    if (dateMatch) {
+      return new Date(str).getTime() || 0;
+    }
+    // Number like patent numbers "12,087,162" or "10,593,206"
+    const numStr = str.replace(/[,$]/g, '');
+    if (!isNaN(numStr) && numStr !== '') return parseFloat(numStr);
+    return str.toLowerCase();
+  }
+
+  function sortTable(tableId, colIndex, dir) {
+    const wrap = document.getElementById(tableId);
+    if (!wrap) return;
+    const table = wrap.querySelector('table');
+    const tbody = table.querySelector('tbody');
+    const rows = Array.from(tbody.querySelectorAll('tr'));
+
+    // Save original order once
+    if (!origOrder[tableId]) {
+      origOrder[tableId] = rows.map(r => r.cloneNode(true));
+    }
+
+    rows.sort((a, b) => {
+      const aVal = parseVal(cellText(a.cells[colIndex]));
+      const bVal = parseVal(cellText(b.cells[colIndex]));
+      if (aVal < bVal) return dir === 'asc' ? -1 : 1;
+      if (aVal > bVal) return dir === 'asc' ? 1 : -1;
+      return 0;
+    });
+
+    rows.forEach(r => tbody.appendChild(r));
+  }
+
+  function resetSort(tableId, barId) {
+    const wrap = document.getElementById(tableId);
+    if (!wrap || !origOrder[tableId]) return;
+    const table = wrap.querySelector('table');
+    const tbody = table.querySelector('tbody');
+    origOrder[tableId].forEach(r => tbody.appendChild(r.cloneNode(true)));
+
+    // Clear header states
+    table.querySelectorAll('thead th').forEach(th => {
+      th.classList.remove('sort-asc', 'sort-desc');
+      delete th._sortDir;
+    });
+
+    const bar = document.getElementById(barId);
+    if (bar) bar.classList.remove('visible');
+  }
+
+  // Expose resetSort globally for onclick
+  window.resetSort = resetSort;
+
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('thead th.sortable').forEach(function(th, absIdx) {
+      th.addEventListener('click', function() {
+        const table   = th.closest('table');
+        const tableWrap = table.closest('[id]');
+        const tableId = tableWrap ? tableWrap.id : null;
+        const ths     = Array.from(th.closest('tr').querySelectorAll('th'));
+        const colIdx  = ths.indexOf(th);
+        const curDir  = th._sortDir;
+        const newDir  = curDir === 'asc' ? 'desc' : 'asc';
+
+        // Clear all headers in this table
+        ths.forEach(h => { h.classList.remove('sort-asc', 'sort-desc'); delete h._sortDir; });
+
+        th.classList.add(newDir === 'asc' ? 'sort-asc' : 'sort-desc');
+        th._sortDir = newDir;
+
+        if (tableId) {
+          sortTable(tableId, colIdx, newDir);
+
+          // Show reset bar
+          const barId = tableId === 'table-1' ? 'reset-bar-1' : 'reset-bar-2';
+          const bar = document.getElementById(barId);
+          if (bar) {
+            bar.classList.add('visible');
+            const lbl = bar.querySelector('.sort-label');
+            if (lbl) lbl.textContent = th.textContent.replace(/[▲▼]/g,'').trim() + ' (' + newDir + ')';
+          }
+        }
+      });
+    });
+  });
+})();
+</script>
+
+</body>
+</html>

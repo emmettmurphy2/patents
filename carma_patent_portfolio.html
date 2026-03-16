@@ -258,6 +258,84 @@
   }
   .sort-reset-btn:hover { background: var(--blue); color: #fff; }
 
+
+  /* ── CSV EXPORT / SELECTION ── */
+  .export-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+  }
+  .export-toolbar-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: 1;
+    flex-wrap: wrap;
+  }
+  .select-count {
+    font-size: 12px;
+    color: var(--txt-l);
+    font-style: italic;
+  }
+  .select-count span { color: var(--blue-d); font-weight: 600; font-style: normal; }
+  .btn-export {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--blue); color: #fff;
+    border: none; border-radius: 6px;
+    padding: 7px 16px; font-size: 12px; font-weight: 600;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer; transition: background 0.15s;
+    white-space: nowrap;
+  }
+  .btn-export:hover { background: var(--blue-d); }
+  .btn-export:disabled { background: #b0c4de; cursor: not-allowed; }
+  .btn-select-all {
+    display: inline-flex; align-items: center; gap: 5px;
+    background: var(--white); color: var(--blue-d);
+    border: 1px solid rgba(74,144,226,0.4); border-radius: 6px;
+    padding: 6px 13px; font-size: 12px; font-weight: 500;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer; transition: all 0.15s;
+    white-space: nowrap;
+  }
+  .btn-select-all:hover { background: var(--blue-pale); border-color: var(--blue); }
+  .btn-clear-sel {
+    display: inline-flex; align-items: center; gap: 5px;
+    background: transparent; color: var(--txt-l);
+    border: 1px solid var(--bdr); border-radius: 6px;
+    padding: 6px 13px; font-size: 12px; font-weight: 500;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer; transition: all 0.15s;
+    white-space: nowrap;
+  }
+  .btn-clear-sel:hover { color: var(--txt); border-color: var(--txt-l); }
+  /* Checkbox column */
+  th.col-check, td.col-check {
+    width: 36px; padding-left: 14px; padding-right: 4px;
+    text-align: center; white-space: nowrap;
+  }
+  th.col-check { cursor: pointer; }
+  input.row-check {
+    width: 15px; height: 15px; cursor: pointer;
+    accent-color: var(--blue);
+    vertical-align: middle;
+  }
+  input#check-all {
+    width: 15px; height: 15px; cursor: pointer;
+    accent-color: var(--blue);
+    vertical-align: middle;
+  }
+  tbody tr.row-selected { background: #deeaf8 !important; }
+  /* Export flash */
+  @keyframes exportFlash {
+    0%   { background: var(--blue); }
+    50%  { background: #1a5ca8; }
+    100% { background: var(--blue); }
+  }
+  .btn-export.exporting { animation: exportFlash 0.4s ease; }
+
 </style>
 </head>
 <body>
@@ -464,10 +542,19 @@
     </div>
     <div class="scroll-hint">Scroll horizontally if needed →</div>
     <div class="sort-reset-bar" id="reset-bar-1"><span>Sorted by: <strong class="sort-label"></strong></span><button class="sort-reset-btn" onclick="resetSort('table-1', 'reset-bar-1')">↺ Reset</button></div>
+    <div class="export-toolbar" id="toolbar-1">
+      <div class="export-toolbar-left">
+        <button class="btn-select-all" onclick="selectAll('table-1', true)">☑ Select All</button>
+        <button class="btn-clear-sel"  onclick="selectAll('table-1', false)">✕ Clear</button>
+        <span class="select-count" id="count-1"><span id="n-1">0</span> rows selected</span>
+      </div>
+      <button class="btn-export" id="exp-btn-1" onclick="exportCSV('table-1')" disabled>⬇ Export Selected as CSV</button>
+    </div>
     <div class="table-wrap" style="overflow-x:auto;" id="table-1">
       <table>
         <thead>
           <tr>
+            <th class="col-check sortable" style="cursor:default;"><input type="checkbox" id="check-all-1" onclick="toggleAll('table-1', this)"></th>
             <th class="sortable">US Patent No.<span class="sort-icon"><span class="arr-up"></span><span class="arr-down"></span></span></th>
             <th class="sortable">Attorney Ref<span class="sort-icon"><span class="arr-up"></span><span class="arr-down"></span></span></th>
             <th class="sortable">Type<span class="sort-icon"><span class="arr-up"></span><span class="arr-down"></span></span></th>
@@ -486,6 +573,7 @@
 
           <!-- ROW 1 — ASSERTED -->
           <tr class="asserted-row">
+            <td class="col-check"><input type="checkbox" class="row-check" onchange="onRowCheck(this)"></td>
             <td class="patent-num">
               <a href="https://patents.google.com/patent/US7840427" target="_blank">US 7,840,427</a>
               <br><span class="asserted-badge">⚖ Asserted · Ex. A</span>
@@ -505,6 +593,7 @@
 
           <!-- ROW 2 -->
           <tr>
+            <td class="col-check"><input type="checkbox" class="row-check" onchange="onRowCheck(this)"></td>
             <td class="patent-num"><a href="https://patents.google.com/patent/US10083608" target="_blank">US 10,083,608</a></td>
             <td class="atty-ref">00199-0001-01000</td>
             <td class="type-cell">Divisional</td>
@@ -521,6 +610,7 @@
 
           <!-- ROW 3 -->
           <tr>
+            <td class="col-check"><input type="checkbox" class="row-check" onchange="onRowCheck(this)"></td>
             <td class="patent-num"><a href="https://patents.google.com/patent/US11210947" target="_blank">US 11,210,947</a></td>
             <td class="atty-ref">00199-0001-02000</td>
             <td class="type-cell">Continuation</td>
@@ -537,6 +627,7 @@
 
           <!-- ROW 4 -->
           <tr>
+            <td class="col-check"><input type="checkbox" class="row-check" onchange="onRowCheck(this)"></td>
             <td class="patent-num"><a href="https://patents.google.com/patent/US10453339" target="_blank">US 10,453,339</a></td>
             <td class="atty-ref">00199-0001-03000</td>
             <td class="type-cell">Continuation</td>
@@ -553,6 +644,7 @@
 
           <!-- ROW 5 -->
           <tr>
+            <td class="col-check"><input type="checkbox" class="row-check" onchange="onRowCheck(this)"></td>
             <td class="patent-num"><a href="https://patents.google.com/patent/US10593206" target="_blank">US 10,593,206</a></td>
             <td class="atty-ref">00199-0001-04000</td>
             <td class="type-cell">Continuation</td>
@@ -569,6 +661,7 @@
 
           <!-- ROW 6 -->
           <tr>
+            <td class="col-check"><input type="checkbox" class="row-check" onchange="onRowCheck(this)"></td>
             <td class="patent-num"><a href="https://patents.google.com/patent/US10593207" target="_blank">US 10,593,207</a></td>
             <td class="atty-ref">00199-0001-05000</td>
             <td class="type-cell">Continuation</td>
@@ -585,6 +678,7 @@
 
           <!-- ROW 7 -->
           <tr>
+            <td class="col-check"><input type="checkbox" class="row-check" onchange="onRowCheck(this)"></td>
             <td class="patent-num"><a href="https://patents.google.com/patent/US10937315" target="_blank">US 10,937,315</a></td>
             <td class="atty-ref">00199-0001-06000</td>
             <td class="type-cell">Continuation</td>
@@ -601,6 +695,7 @@
 
           <!-- ROW 8 -->
           <tr>
+            <td class="col-check"><input type="checkbox" class="row-check" onchange="onRowCheck(this)"></td>
             <td class="patent-num"><a href="https://patents.google.com/patent/US11295618" target="_blank">US 11,295,618</a></td>
             <td class="atty-ref">00199-0001-07000</td>
             <td class="type-cell">Continuation</td>
@@ -617,6 +712,7 @@
 
           <!-- ROW 9 -->
           <tr>
+            <td class="col-check"><input type="checkbox" class="row-check" onchange="onRowCheck(this)"></td>
             <td class="patent-num"><a href="https://patents.google.com/patent/US11263904" target="_blank">US 11,263,904</a></td>
             <td class="atty-ref">00199-0001-08000</td>
             <td class="type-cell">Continuation</td>
@@ -633,6 +729,7 @@
 
           <!-- ROW 10 -->
           <tr>
+            <td class="col-check"><input type="checkbox" class="row-check" onchange="onRowCheck(this)"></td>
             <td class="patent-num"><a href="https://patents.google.com/patent/US11270584" target="_blank">US 11,270,584</a></td>
             <td class="atty-ref">00199-0001-09000</td>
             <td class="type-cell">Continuation</td>
@@ -649,6 +746,7 @@
 
           <!-- ROW 11 -->
           <tr>
+            <td class="col-check"><input type="checkbox" class="row-check" onchange="onRowCheck(this)"></td>
             <td class="patent-num"><a href="https://patents.google.com/patent/US10854075" target="_blank">US 10,854,075</a></td>
             <td class="atty-ref">00199-0001-10000</td>
             <td class="type-cell">Continuation</td>
@@ -665,6 +763,7 @@
 
           <!-- ROW 12 -->
           <tr>
+            <td class="col-check"><input type="checkbox" class="row-check" onchange="onRowCheck(this)"></td>
             <td class="patent-num"><a href="https://patents.google.com/patent/US10943480" target="_blank">US 10,943,480</a></td>
             <td class="atty-ref">00199-0001-11000</td>
             <td class="type-cell">Continuation</td>
@@ -681,6 +780,7 @@
 
           <!-- ROW 13 -->
           <tr>
+            <td class="col-check"><input type="checkbox" class="row-check" onchange="onRowCheck(this)"></td>
             <td class="patent-num"><a href="https://patents.google.com/patent/US10803749" target="_blank">US 10,803,749</a></td>
             <td class="atty-ref">00199-0001-12000</td>
             <td class="type-cell">Continuation</td>
@@ -697,6 +797,7 @@
 
           <!-- ROW 14 -->
           <tr>
+            <td class="col-check"><input type="checkbox" class="row-check" onchange="onRowCheck(this)"></td>
             <td class="patent-num"><a href="https://patents.google.com/patent/US11538339" target="_blank">US 11,538,339</a></td>
             <td class="atty-ref">00199-0001-13000</td>
             <td class="type-cell">Continuation</td>
@@ -713,6 +814,7 @@
 
           <!-- ROW 15 -->
           <tr>
+            <td class="col-check"><input type="checkbox" class="row-check" onchange="onRowCheck(this)"></td>
             <td class="patent-num"><a href="https://patents.google.com/patent/US10593208" target="_blank">US 10,593,208</a></td>
             <td class="atty-ref">00199-0001-14000</td>
             <td class="type-cell">Continuation</td>
@@ -729,6 +831,7 @@
 
           <!-- ROW 16 — ASSERTED -->
           <tr class="asserted-row">
+            <td class="col-check"><input type="checkbox" class="row-check" onchange="onRowCheck(this)"></td>
             <td class="patent-num">
               <a href="https://patents.google.com/patent/US10916138" target="_blank">US 10,916,138</a>
               <br><span class="asserted-badge">⚖ Asserted</span>
@@ -748,6 +851,7 @@
 
           <!-- ROW 17 -->
           <tr>
+            <td class="col-check"><input type="checkbox" class="row-check" onchange="onRowCheck(this)"></td>
             <td class="patent-num"><a href="https://patents.google.com/patent/US10783783" target="_blank">US 10,783,783</a></td>
             <td class="atty-ref">00199-0001-16000</td>
             <td class="type-cell">Continuation</td>
@@ -764,6 +868,7 @@
 
           <!-- ROW 18 -->
           <tr>
+            <td class="col-check"><input type="checkbox" class="row-check" onchange="onRowCheck(this)"></td>
             <td class="patent-num"><a href="https://patents.google.com/patent/US10672271" target="_blank">US 10,672,271</a></td>
             <td class="atty-ref">00199-0001-17000</td>
             <td class="type-cell">Continuation</td>
@@ -780,6 +885,7 @@
 
           <!-- ROW 19 -->
           <tr>
+            <td class="col-check"><input type="checkbox" class="row-check" onchange="onRowCheck(this)"></td>
             <td class="patent-num"><a href="https://patents.google.com/patent/US11250705" target="_blank">US 11,250,705</a></td>
             <td class="atty-ref">00199-0001-18000</td>
             <td class="type-cell">Continuation</td>
@@ -796,6 +902,7 @@
 
           <!-- ROW 20 -->
           <tr>
+            <td class="col-check"><input type="checkbox" class="row-check" onchange="onRowCheck(this)"></td>
             <td class="patent-num"><a href="https://patents.google.com/patent/US10748420" target="_blank">US 10,748,420</a></td>
             <td class="atty-ref">00199-0001-19000</td>
             <td class="type-cell">Continuation</td>
@@ -812,6 +919,7 @@
 
           <!-- ROW 21 — ASSERTED -->
           <tr class="asserted-row">
+            <td class="col-check"><input type="checkbox" class="row-check" onchange="onRowCheck(this)"></td>
             <td class="patent-num">
               <a href="https://patents.google.com/patent/US10741071" target="_blank">US 10,741,071</a>
               <br><span class="asserted-badge">⚖ Asserted</span>
@@ -831,6 +939,7 @@
 
           <!-- ROW 22 — ASSERTED -->
           <tr class="asserted-row">
+            <td class="col-check"><input type="checkbox" class="row-check" onchange="onRowCheck(this)"></td>
             <td class="patent-num">
               <a href="https://patents.google.com/patent/US11017668" target="_blank">US 11,017,668</a>
               <br><span class="asserted-badge">⚖ Asserted</span>
@@ -850,6 +959,7 @@
 
           <!-- ROW 23 -->
           <tr>
+            <td class="col-check"><input type="checkbox" class="row-check" onchange="onRowCheck(this)"></td>
             <td class="patent-num"><a href="https://patents.google.com/patent/US11308803" target="_blank">US 11,308,803</a></td>
             <td class="atty-ref">00199-0001-22000</td>
             <td class="type-cell">Continuation</td>
@@ -866,6 +976,7 @@
 
           <!-- ROW 24 -->
           <tr>
+            <td class="col-check"><input type="checkbox" class="row-check" onchange="onRowCheck(this)"></td>
             <td class="patent-num"><a href="https://patents.google.com/patent/US11302190" target="_blank">US 11,302,190</a></td>
             <td class="atty-ref">00199-0001-23000</td>
             <td class="type-cell">Continuation</td>
@@ -882,6 +993,7 @@
 
           <!-- ROW 25 -->
           <tr>
+            <td class="col-check"><input type="checkbox" class="row-check" onchange="onRowCheck(this)"></td>
             <td class="patent-num"><a href="https://patents.google.com/patent/US11568742" target="_blank">US 11,568,742</a></td>
             <td class="atty-ref">00199-0001-24000</td>
             <td class="type-cell">Continuation</td>
@@ -898,6 +1010,7 @@
 
           <!-- ROW 26 — ASSERTED -->
           <tr class="asserted-row">
+            <td class="col-check"><input type="checkbox" class="row-check" onchange="onRowCheck(this)"></td>
             <td class="patent-num">
               <a href="https://patents.google.com/patent/US11164456" target="_blank">US 11,164,456</a>
               <br><span class="asserted-badge">⚖ Asserted · Ex. E</span>
@@ -917,6 +1030,7 @@
 
           <!-- ROW 27 -->
           <tr>
+            <td class="col-check"><input type="checkbox" class="row-check" onchange="onRowCheck(this)"></td>
             <td class="patent-num"><a href="https://patents.google.com/patent/US11538340" target="_blank">US 11,538,340</a></td>
             <td class="atty-ref">00199-0001-26000</td>
             <td class="type-cell">Continuation</td>
@@ -933,6 +1047,7 @@
 
           <!-- ROW 28 -->
           <tr>
+            <td class="col-check"><input type="checkbox" class="row-check" onchange="onRowCheck(this)"></td>
             <td class="patent-num"><a href="https://patents.google.com/patent/US11574542" target="_blank">US 11,574,542</a></td>
             <td class="atty-ref">00199-0001-27000</td>
             <td class="type-cell">Continuation</td>
@@ -949,6 +1064,7 @@
 
           <!-- ROW 29 -->
           <tr>
+            <td class="col-check"><input type="checkbox" class="row-check" onchange="onRowCheck(this)"></td>
             <td class="patent-num"><a href="https://patents.google.com/patent/US11288960" target="_blank">US 11,288,960</a></td>
             <td class="atty-ref">00199-0001-35000</td>
             <td class="type-cell">Continuation</td>
@@ -965,6 +1081,7 @@
 
           <!-- ROW 30 -->
           <tr>
+            <td class="col-check"><input type="checkbox" class="row-check" onchange="onRowCheck(this)"></td>
             <td class="patent-num"><a href="https://patents.google.com/patent/US12087162" target="_blank">US 12,087,162</a></td>
             <td class="atty-ref">00199-0001-28000</td>
             <td class="type-cell">Continuation</td>
@@ -981,6 +1098,7 @@
 
           <!-- ROW 31 -->
           <tr>
+            <td class="col-check"><input type="checkbox" class="row-check" onchange="onRowCheck(this)"></td>
             <td class="patent-num"><a href="https://patents.google.com/patent/US12579890" target="_blank">US 12,579,890</a></td>
             <td class="atty-ref">00199-0001-29000</td>
             <td class="type-cell">Continuation</td>
@@ -997,6 +1115,7 @@
 
           <!-- ROW 32 — ALLOWED -->
           <tr class="pending-row">
+            <td class="col-check"><input type="checkbox" class="row-check" onchange="onRowCheck(this)"></td>
             <td class="patent-num">
               <span class="patent-pending">App. 19/337,341</span>
             </td>
@@ -1015,6 +1134,7 @@
 
           <!-- ROW 33 — PUBLISHED -->
           <tr class="pending-row">
+            <td class="col-check"><input type="checkbox" class="row-check" onchange="onRowCheck(this)"></td>
             <td class="patent-num">
               <span class="patent-pending">App. 18/797,008</span>
               <br><span style="font-size:10px;color:var(--text-light);">Pub. 20250037582</span>
@@ -1034,6 +1154,7 @@
 
           <!-- ROW 34 — PENDING -->
           <tr class="pending-row">
+            <td class="col-check"><input type="checkbox" class="row-check" onchange="onRowCheck(this)"></td>
             <td class="patent-num">
               <span class="patent-pending">App. 19/541,860</span>
             </td>
@@ -1069,10 +1190,19 @@
       A new, independent patent family filed December 5, 2025 covering next-generation vehicle identification technology using multi-sensor data fusion. Filed with the USPTO's Track One Prioritized Examination program, targeting an expedited examination timeline.
     </div>
     <div class="sort-reset-bar" id="reset-bar-2"><span>Sorted by: <strong class="sort-label"></strong></span><button class="sort-reset-btn" onclick="resetSort('table-2', 'reset-bar-2')">↺ Reset</button></div>
+    <div class="export-toolbar" id="toolbar-2">
+      <div class="export-toolbar-left">
+        <button class="btn-select-all" onclick="selectAll('table-2', true)">☑ Select All</button>
+        <button class="btn-clear-sel"  onclick="selectAll('table-2', false)">✕ Clear</button>
+        <span class="select-count" id="count-2"><span id="n-2">0</span> rows selected</span>
+      </div>
+      <button class="btn-export" id="exp-btn-2" onclick="exportCSV('table-2')" disabled>⬇ Export Selected as CSV</button>
+    </div>
     <div class="table-wrap" id="table-2">
       <table>
         <thead>
           <tr>
+            <th class="col-check sortable" style="cursor:default;"><input type="checkbox" id="check-all-2" onclick="toggleAll('table-2', this)"></th>
             <th class="sortable">US Patent No.<span class="sort-icon"><span class="arr-up"></span><span class="arr-down"></span></span></th>
             <th class="sortable">Attorney Ref<span class="sort-icon"><span class="arr-up"></span><span class="arr-down"></span></span></th>
             <th class="sortable">Type<span class="sort-icon"><span class="arr-up"></span><span class="arr-down"></span></span></th>
@@ -1089,6 +1219,7 @@
         </thead>
         <tbody>
           <tr class="pending-row">
+            <td class="col-check"><input type="checkbox" class="row-check" onchange="onRowCheck(this)"></td>
             <td class="patent-num">
               <span class="patent-pending">App. 19/410,232</span>
             </td>
@@ -1243,6 +1374,112 @@
     });
   });
 })();
+</script>
+
+
+<script>
+/* ── SELECTION & CSV EXPORT ─────────────────────────────── */
+function getTableNum(tableId) {
+  return tableId.replace('table-', '');
+}
+
+function onRowCheck(checkbox) {
+  const row = checkbox.closest('tr');
+  if (checkbox.checked) {
+    row.classList.add('row-selected');
+  } else {
+    row.classList.remove('row-selected');
+    // uncheck header checkbox
+    const tableId = checkbox.closest('[id^="table-"]').id;
+    const n = getTableNum(tableId);
+    const hdr = document.getElementById('check-all-' + n);
+    if (hdr) hdr.checked = false;
+  }
+  updateCount();
+}
+
+function toggleAll(tableId, checkbox) {
+  const wrap = document.getElementById(tableId);
+  if (!wrap) return;
+  const checked = typeof checkbox === 'boolean' ? checkbox : checkbox.checked;
+  wrap.querySelectorAll('tbody .row-check').forEach(cb => {
+    cb.checked = checked;
+    cb.closest('tr').classList.toggle('row-selected', checked);
+  });
+  const n = getTableNum(tableId);
+  const hdr = document.getElementById('check-all-' + n);
+  if (hdr) hdr.checked = checked;
+  updateCount();
+}
+
+function selectAll(tableId, checked) {
+  toggleAll(tableId, checked);
+}
+
+function updateCount() {
+  ['1','2'].forEach(n => {
+    const wrap = document.getElementById('table-' + n);
+    if (!wrap) return;
+    const total = wrap.querySelectorAll('tbody .row-check:checked').length;
+    const el = document.getElementById('n-' + n);
+    if (el) el.textContent = total;
+    const btn = document.getElementById('exp-btn-' + n);
+    if (btn) btn.disabled = total === 0;
+  });
+}
+
+function cellCSV(td) {
+  if (!td) return '';
+  const clone = td.cloneNode(true);
+  // Remove icon/badge elements that pollute CSV
+  clone.querySelectorAll('.asserted-badge, .sort-icon, .arr-up, .arr-down').forEach(el => el.remove());
+  // Remove checkboxes
+  clone.querySelectorAll('input').forEach(el => el.remove());
+  let text = clone.textContent.replace(/\s+/g, ' ').trim();
+  // Escape quotes
+  text = text.replace(/"/g, '""');
+  return '"' + text + '"';
+}
+
+function exportCSV(tableId) {
+  const wrap = document.getElementById(tableId);
+  if (!wrap) return;
+  const table = wrap.querySelector('table');
+  const n = getTableNum(tableId);
+  const btn = document.getElementById('exp-btn-' + n);
+
+  // Flash animation
+  if (btn) { btn.classList.add('exporting'); setTimeout(()=>btn.classList.remove('exporting'), 400); }
+
+  // Headers — skip the checkbox column (col 0)
+  const headers = Array.from(table.querySelectorAll('thead th')).slice(1);
+  const headerRow = headers.map(th => {
+    const clone = th.cloneNode(true);
+    clone.querySelectorAll('.sort-icon,.arr-up,.arr-down').forEach(el=>el.remove());
+    return '"' + clone.textContent.replace(/\s+/g,' ').trim().replace(/"/g,'""') + '"';
+  }).join(',');
+
+  // Selected rows — skip col 0 (checkbox)
+  const rows = Array.from(table.querySelectorAll('tbody tr'))
+    .filter(tr => tr.querySelector('.row-check') && tr.querySelector('.row-check').checked);
+
+  const dataRows = rows.map(tr => {
+    const cells = Array.from(tr.cells).slice(1); // skip checkbox cell
+    return cells.map(td => cellCSV(td)).join(',');
+  });
+
+  const csv = [headerRow, ...dataRows].join('\n');
+  const blob = new Blob([csv], {type: 'text/csv;charset=utf-8;'});
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  a.href = url;
+  const familyLabel = tableId === 'table-1' ? 'Family-00199-0001' : 'Family-00199-0004';
+  a.download = 'Carma_Patents_' + familyLabel + '_' + new Date().toISOString().slice(0,10) + '.csv';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
 </script>
 
 </body>
